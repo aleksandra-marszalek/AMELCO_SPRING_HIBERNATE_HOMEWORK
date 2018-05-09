@@ -1,6 +1,10 @@
 package pl.coderslab.entity;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,15 +17,20 @@ public class Article {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @NotNull
+    @Size(max = 200)
     @Column( length = 200)
     private String title;
 
     @ManyToOne
     private Author author;
 
+    @NotEmpty
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Category> categories = new ArrayList<>();
 
+    @NotNull
+    @Size(min = 500)
     @Column( columnDefinition = "TEXT")
     private String content;
     private LocalDateTime created;

@@ -3,12 +3,14 @@ package pl.coderslab.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import pl.coderslab.dao.ArticleDao;
 import pl.coderslab.dao.AuthorDao;
 import pl.coderslab.entity.Article;
 import pl.coderslab.entity.Author;
 
+import javax.validation.Valid;
 import java.awt.print.Book;
 import java.util.List;
 
@@ -36,7 +38,10 @@ import java.util.List;
         }
 
         @PostMapping("/author/add")
-        public String authorForm(@ModelAttribute Author author) {
+        public String authorForm(@Valid @ModelAttribute Author author, BindingResult result) {
+            if (result.hasErrors()) {
+                return "AuthorForm";
+            }
             authorDao.save(author);
             return "redirect:/author";
         }
@@ -49,7 +54,10 @@ import java.util.List;
         }
 
         @PostMapping("/author/edit/{id}")
-        public String edit(@ModelAttribute Author author, @PathVariable long id) {
+        public String edit(@Valid @ModelAttribute Author author, @PathVariable long id, BindingResult result) {
+            if (result.hasErrors()) {
+                return "AuthorForm";
+            }
             authorDao.update(author);
             return "redirect:/author";
         }
@@ -62,9 +70,14 @@ import java.util.List;
         }
 
         @PostMapping("/author/delete/{id}")
-        public String delete(@ModelAttribute Author author, @PathVariable long id, @RequestParam String agree) {
+        public String delete(@ModelAttribute Author author, @PathVariable long id, @RequestParam String agree, Model model) {
             if (agree.equals("yes")) {
-                authorDao.delete(author.getId());
+                try {
+                    authorDao.delete(author.getId());
+                } catch (Exception e) {
+                    model.addAttribute("error", "author");
+                    return "Error";
+                }
             }
             return "redirect:/author";
         }

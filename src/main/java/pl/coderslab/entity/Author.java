@@ -1,6 +1,7 @@
 package pl.coderslab.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,9 +13,10 @@ public class Author {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-
+    @NotNull
     private String firstName;
 
+    @NotNull
     private String lastName;
 
     @OneToMany(mappedBy = "author", fetch = FetchType.EAGER)

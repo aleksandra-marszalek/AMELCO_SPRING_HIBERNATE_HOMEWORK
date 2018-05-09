@@ -14,7 +14,10 @@
 <body>
 <form:form method="post" modelAttribute="author">
     First name: <form:input path="firstName" placeholder="first name"/>
+    <form:errors path="firstName"/>
+
     Last name: <form:input path="lastName" placeholder="last name"/>
+    <form:errors path="lastName"/>
 
 
     <form:hidden path="id" value="${author.id}"/>

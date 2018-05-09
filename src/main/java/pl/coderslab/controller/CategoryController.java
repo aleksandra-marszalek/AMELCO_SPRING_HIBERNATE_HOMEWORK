@@ -3,12 +3,14 @@ package pl.coderslab.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import pl.coderslab.dao.ArticleDao;
 import pl.coderslab.dao.CategoryDao;
 import pl.coderslab.entity.Article;
 import pl.coderslab.entity.Category;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -34,7 +36,10 @@ public class CategoryController {
     }
 
     @PostMapping("/category/add")
-    public String categoryForm(@ModelAttribute Category category) {
+    public String categoryForm(@Valid @ModelAttribute Category category, BindingResult result) {
+        if (result.hasErrors()) {
+            return "CategoryForm";
+        }
         categoryDao.save(category);
         return "redirect:/category";
     }
@@ -47,7 +52,10 @@ public class CategoryController {
     }
 
     @PostMapping("/category/edit/{id}")
-    public String edit(@ModelAttribute Category category, @PathVariable long id) {
+    public String edit(@Valid @ModelAttribute Category category, @PathVariable long id, BindingResult result) {
+        if (result.hasErrors()) {
+            return "CategoryForm";
+        }
         categoryDao.update(category);
         return "redirect:/category";
     }
@@ -60,9 +68,14 @@ public class CategoryController {
     }
 
     @PostMapping("/category/delete/{id}")
-    public String delete(@ModelAttribute Category category, @PathVariable long id, @RequestParam String agree) {
+    public String delete(@ModelAttribute Category category, @PathVariable long id, @RequestParam String agree, Model model) {
         if (agree.equals("yes")) {
-            categoryDao.delete(category.getId());
+            try {
+                categoryDao.delete(category.getId());
+            } catch (Exception e) {
+                model.addAttribute("error", "category");
+                return "Error";
+            }
         }
         return "redirect:/category";
     }

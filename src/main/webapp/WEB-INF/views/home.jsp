@@ -13,11 +13,16 @@
     <title>homepage</title>
 </head>
 <body>
-<h1>Last articles: </h1>
+<h1>Homepage</h1>
+<a href="/article">Go to all articles</a>
+<a href="/category">Go to all categories</a>
+<a href="/author">Go to all authors</a>
+
+<h2>Last articles: </h2>
 <c:forEach var="article" items="${articles}">
     <c:out value="${article.title}"/>
     <c:out value="${article.created}"/>
-    <c:out value="${fn:substring(article.content, 0, 10)}"/><br>
+    <c:out value="${fn:substring(article.content, 0, 200)}"/><br>
 </c:forEach>
 <h2>Categories</h2>
 <c:forEach items="${categories}" var="category">

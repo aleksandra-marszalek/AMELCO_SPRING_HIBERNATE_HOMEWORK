@@ -1,6 +1,8 @@
 package pl.coderslab.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.awt.print.Book;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +16,8 @@ public class Category {
     private long id;
 
     @Column(length = 100)
+    @NotNull
+    @Size(min = 5)
     private String name;
 
     @Column(nullable = true)

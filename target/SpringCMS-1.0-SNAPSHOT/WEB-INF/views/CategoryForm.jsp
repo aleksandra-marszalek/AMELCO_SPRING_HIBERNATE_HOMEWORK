@@ -14,7 +14,10 @@
 <body>
 <form:form method="post" modelAttribute="category">
     name: <form:input path="name" placeholder="name"/>
+    <form:errors path="name"/>
+
     description: <form:input path="description" placeholder="description"/>
+    <form:errors path="description"/>
 
 
     <form:hidden path="id" value="${category.id}"/>

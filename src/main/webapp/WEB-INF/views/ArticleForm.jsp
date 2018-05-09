@@ -14,7 +14,10 @@
 <body>
 <form:form method="post" modelAttribute="article">
     title: <form:input path="title" placeholder="title"/>
+    <form:errors path="title"/>
+
     content: <form:textarea path="content" placeholder="content" rows="20" cols="100"/>
+    <form:errors path="content"/>
 
     <label>Author: </label>
     <form:select path="author.id"
@@ -28,6 +31,7 @@
                      items="${categories}"
                      itemLabel="name"
                      itemValue="id"/>
+    <form:errors path="categories"/>
 
     <form:hidden path="id" value="${article.id}"/>
 
