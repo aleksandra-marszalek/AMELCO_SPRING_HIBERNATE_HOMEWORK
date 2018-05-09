@@ -13,6 +13,7 @@
     <title>Title</title>
 </head>
 <body>
+<%@ include file="header.jsp" %>
 <ul>
     <c:forEach items="${articles}" var="article">
         <li>

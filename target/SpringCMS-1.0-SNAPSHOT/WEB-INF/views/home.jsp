@@ -13,10 +13,8 @@
     <title>homepage</title>
 </head>
 <body>
+<%@ include file="header.jsp" %>
 <h1>Homepage</h1>
-<a href="/article">Go to all articles</a>
-<a href="/category">Go to all categories</a>
-<a href="/author">Go to all authors</a>
 
 <h2>Last articles: </h2>
 <c:forEach var="article" items="${articles}">
