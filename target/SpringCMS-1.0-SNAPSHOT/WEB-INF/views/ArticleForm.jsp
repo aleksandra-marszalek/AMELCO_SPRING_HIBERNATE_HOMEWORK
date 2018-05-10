@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <title>Title</title>
@@ -33,13 +34,15 @@
                      itemValue="id"/>
     <form:errors path="categories"/>
 
+    <form:input path="quantity" type="number"/>
+    <form:errors path="quantity"/>
+
     <form:hidden path="id" value="${article.id}"/>
 
     <input type="submit" value="save"/>
 
 
 </form:form>
-
 </body>
 
 

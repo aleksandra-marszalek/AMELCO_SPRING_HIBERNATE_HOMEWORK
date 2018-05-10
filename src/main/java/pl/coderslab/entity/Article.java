@@ -1,6 +1,7 @@
 package pl.coderslab.entity;
 
 import org.hibernate.validator.constraints.NotEmpty;
+import pl.coderslab.validator.SetQuantity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -35,6 +36,9 @@ public class Article {
     private String content;
     private LocalDateTime created;
     private LocalDateTime updated;
+
+    @SetQuantity(value = 5)
+    private int quantity;
 
 
     public Article() {
@@ -95,5 +99,13 @@ public class Article {
 
     public void setUpdated(LocalDateTime updated) {
         this.updated = updated;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 }
