@@ -1,11 +1,13 @@
 package pl.coderslab.entity;
 
 import org.hibernate.validator.constraints.NotEmpty;
+import pl.coderslab.interfaces.ValidationDraft;
 import pl.coderslab.validator.SetQuantity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.validation.groups.Default;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +20,7 @@ public class Article {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @NotNull
+    @NotNull(groups={Default.class, ValidationDraft.class})
     @Size(max = 200)
     @Column( length = 200)
     private String title;
@@ -26,19 +28,21 @@ public class Article {
     @ManyToOne
     private Author author;
 
-    @NotEmpty
+    @NotEmpty(groups = {ValidationDraft.class})
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Category> categories = new ArrayList<>();
 
-    @NotNull
+    @NotNull(groups={Default.class, ValidationDraft.class})
     @Size(min = 500)
     @Column( columnDefinition = "TEXT")
     private String content;
     private LocalDateTime created;
     private LocalDateTime updated;
 
-    @SetQuantity(value = 5)
+    @SetQuantity(value = 5, groups = {ValidationDraft.class})
     private int quantity;
+
+    private boolean draft;
 
 
     public Article() {
@@ -107,5 +111,13 @@ public class Article {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public boolean isDraft() {
+        return draft;
+    }
+
+    public void setDraft(boolean draft) {
+        this.draft = draft;
     }
 }

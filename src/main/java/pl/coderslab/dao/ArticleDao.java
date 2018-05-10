@@ -61,4 +61,10 @@ public class ArticleDao {
             return articlesByCategoryId;
     }
 
+    public List<Article> findDrafts () {
+            Query query = em.createQuery("Select a From Article a where a.draft=true");
+            List<Article> drafts = query.getResultList();
+            return drafts;
+    }
+
 }

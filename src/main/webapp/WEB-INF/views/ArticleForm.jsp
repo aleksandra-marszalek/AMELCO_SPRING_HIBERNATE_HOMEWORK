@@ -34,8 +34,13 @@
                      itemValue="id"/>
     <form:errors path="categories"/>
 
+    Set quantity:
     <form:input path="quantity" type="number"/>
     <form:errors path="quantity"/>
+
+    Save as draft:
+    <form:checkbox path="draft"/>
+
 
     <form:hidden path="id" value="${article.id}"/>
 

@@ -16,6 +16,7 @@
 <a href="/article">Go to all articles</a>
 <a href="/category">Go to all categories</a>
 <a href="/author">Go to all authors</a>
+<a href="/draft">Go to all drafts</a>
 
 </body>
 </html>

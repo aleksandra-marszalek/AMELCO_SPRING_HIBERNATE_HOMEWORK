@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import pl.coderslab.dao.ArticleDao;
 import pl.coderslab.dao.AuthorDao;
@@ -11,6 +12,7 @@ import pl.coderslab.dao.CategoryDao;
 import pl.coderslab.entity.Article;
 import pl.coderslab.entity.Author;
 import pl.coderslab.entity.Category;
+import pl.coderslab.interfaces.ValidationDraft;
 
 
 import javax.validation.Valid;
@@ -44,7 +46,7 @@ import java.util.List;
         }
 
         @PostMapping("/article/add")
-        public String articleForm(@Valid @ModelAttribute Article article, BindingResult result) {
+        public String articleForm(@Validated({ValidationDraft.class}) @ModelAttribute Article article, BindingResult result) {
             if (result.hasErrors()) {
                 return "ArticleForm";
             }
@@ -61,7 +63,7 @@ import java.util.List;
         }
 
         @PostMapping("/article/edit/{id}")
-        public String edit(@Valid @ModelAttribute Article article, @PathVariable long id, BindingResult result) {
+        public String edit(@Validated({ValidationDraft.class}) @ModelAttribute Article article, @PathVariable long id, BindingResult result) {
             if (result.hasErrors()) {
                 return "ArticleForm";
             }
