@@ -13,6 +13,7 @@ import pl.coderslab.entity.Article;
 import pl.coderslab.entity.Author;
 import pl.coderslab.entity.Category;
 import pl.coderslab.interfaces.ValidationDraft;
+import pl.coderslab.repository.ArticleRepository;
 
 
 import javax.validation.Valid;
@@ -31,9 +32,13 @@ import java.util.List;
         @Autowired
         CategoryDao categoryDao;
 
+        @Autowired
+        ArticleRepository articleRepository;
+
         @GetMapping("/article")
         public String allArticles(Model model) {
-            List<Article> articles = articleDao.findAll();
+          //  List<Article> articles = articleDao.findAll();
+           List<Article> articles = articleRepository.findAll();
             model.addAttribute("articles", articles);
             return "ArticleList";
         }
@@ -50,13 +55,13 @@ import java.util.List;
             if (result.hasErrors()) {
                 return "ArticleForm";
             }
-            articleDao.save(article);
+            articleRepository.save(article);
             return "redirect:/article";
         }
 
         @GetMapping("/article/edit/{id}")
         public String article(Model model, @PathVariable long id) {
-            Article article = articleDao.findById(id);
+            Article article = articleRepository.findOne(id);
             //System.out.println(article.getCreated());
             model.addAttribute("article", article);
             return "ArticleForm";
@@ -67,13 +72,13 @@ import java.util.List;
             if (result.hasErrors()) {
                 return "ArticleForm";
             }
-            articleDao.update(article);
+            articleRepository.save(article);
             return "redirect:/article";
         }
 
         @GetMapping("/article/delete/{id}")
         public String delete(Model model, @PathVariable long id) {
-            Article article = articleDao.findById(id);
+            Article article = articleRepository.findOne(id);
             model.addAttribute("article", article);
             return "ArticleDelete";
         }
@@ -81,7 +86,7 @@ import java.util.List;
         @PostMapping("/article/delete/{id}")
         public String delete(@ModelAttribute Article article, @PathVariable long id, @RequestParam String agree) {
             if (agree.equals("yes")) {
-                articleDao.delete(article.getId());
+                articleRepository.delete(article.getId());
             }
             return "redirect:/article";
         }

@@ -13,6 +13,7 @@ import pl.coderslab.dao.ArticleDao;
 import pl.coderslab.dao.CategoryDao;
 import pl.coderslab.entity.Article;
 import pl.coderslab.entity.Category;
+import pl.coderslab.repository.ArticleRepository;
 
 import java.awt.print.Book;
 import java.util.List;
@@ -26,9 +27,13 @@ public class HomePageController {
     @Autowired
     CategoryDao categoryDao;
 
+    @Autowired
+    ArticleRepository articleRepository;
+
     @GetMapping("/")
     public String showLast5(Model model) {
-        List<Article> latestArticles = articleDao.findLastest(5);
+        List<Article> latestArticles = articleRepository.findArticlesByCreated();
+        latestArticles = latestArticles.subList(0, 5);
         model.addAttribute("articles", latestArticles);
         return "home";
     }
