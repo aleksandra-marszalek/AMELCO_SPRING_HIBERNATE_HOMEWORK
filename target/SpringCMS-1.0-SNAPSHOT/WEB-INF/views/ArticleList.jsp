@@ -14,6 +14,8 @@
 </head>
 <body>
 <%@ include file="header.jsp" %>
+<h1>Articles</h1>
+<p><a href="/article/add">Add new article</a> </p>
 <ul>
     <c:forEach items="${articles}" var="article">
         <li>

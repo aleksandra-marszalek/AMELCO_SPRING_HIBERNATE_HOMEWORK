@@ -36,6 +36,8 @@ public class HomePageController {
     @GetMapping("/articles/{id}")
     public String showArticles(Model model, @PathVariable int id) {
         List<Article> articlesById = articleDao.findByCategoryId(id);
+        String catName = categoryDao.findById(id).getName();
+        model.addAttribute("category", catName);
         model.addAttribute("articles", articlesById);
             return "ArticlesById";
     }
